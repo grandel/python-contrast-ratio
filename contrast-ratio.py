@@ -33,11 +33,18 @@ if __name__ == '__main__':
 
     color_one = get_hex_code(sys.argv[1])
     color_two = get_hex_code(sys.argv[2])
+	
+	color_one_luminance = calculate_relative_luminance(color_one)
+	color_two_luminance = calculate_relative_luminance(color_two)
+	
+	if (color_one_luminance > color_two_luminance):
+		light = color_one_luminance
+		dark = color_two_luminance
+	else:
+		dark = color_one_luminance
+		light = color_two_luminance
 
-    light = color_one if sum(color_one) > sum(color_two) else color_two
-    dark = color_one if sum(color_one) < sum(color_two) else color_two
-
-    contrast_ratio = ( calculate_relative_luminance(light) + 0.05 ) / ( calculate_relative_luminance(dark) + 0.05 )
+    contrast_ratio = ( light + 0.05 ) / ( dark + 0.05 )
 
     if contrast_ratio < 3:
         usable_for = "incidental usage or logotypes."
